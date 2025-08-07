@@ -1,55 +1,79 @@
-@extends('layouts.app')
-
+@extends('layouts.admin')
 @section('content')
+ <div class="mb-4 border-b pb-2">
+     <h2 class="text-3xl font-bold text-gray-800 ">Edit Lead</h2>
+     <p class="text-sm text-gray-500 mt-1">Enter the lead information below to create a new record.</p>
+ </div>
+    <div class="py-6">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ">
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-8 px-6 py-4">
+                <form action="{{ route('leads.update', $lead) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  @csrf
+ @method('PUT')
 
-  <div class="py-12">
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 text-gray-900">
+                    <!-- Name -->
+                    <div>
+                        <x-input-label for="name" value="Name" />
+                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"  value="{{ old('name', $lead->name) }}" required/>
+                    </div>
 
+                    <!-- Email -->
+                    <div>
+                        <x-input-label for="email" value="Email" />
+                        <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" value="{{ old('email', $lead->email) }}" required  />
+                    </div>
 
+                    <!-- Phone -->
+                    <div>
+                        <x-input-label for="phone" value="Phone" />
+                        <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" value="{{ old('phone', $lead->phone) }}" required />
+                    </div>
 
-    <h1 class="text-2xl font-bold mb-4">Edit Lead</h1>
+                    <!-- Lead Source -->
+                    <div>
+                        <x-input-label for="lead_source" value="Lead Source" />
+                        <x-text-input id="lead_source" name="lead_source" type="text" class="mt-1 block w-full"  value="{{ old('lead_source', $lead->lead_source) }}" required />
+                    </div>
 
-    <form action="{{ route('leads.update', $lead) }}" method="POST" class="space-y-4">
-        @csrf
-        @method('PUT')
+                    <!-- Status -->
+                    <div>
+                        <x-input-label for="status" value="Status" />
+                        <select name="status" id="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            @foreach (['New', 'Contacted', 'Converted', 'Lost'] as $status)
+                                <option value="{{ $status }}" {{ $lead->status === $status ? 'selected' : '' }}>{{ $status }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-        <x-input-label for="name" value="Name" />
-        <x-text-input id="name" name="name" type="text" class="w-full" value="{{ old('name', $lead->name) }}" required />
+                    <!-- Assign to -->
+                    <div>
+                        <x-input-label for="assigned_to" value="Assign to (Sales Executive)" />
+                        <select name="assigned_to" id="assigned_to" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Unassigned</option>
+                            @foreach ($salesUsers as $user)
+                              <option value="{{ $user->id }}" {{ $lead->assigned_to == $user->id ? 'selected' : '' }}>
+     {{ $user->name }}
+ </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-        <x-input-label for="email" value="Email" />
-        <x-text-input id="email" name="email" type="email" class="w-full" value="{{ old('email', $lead->email) }}" required />
+                    <!-- Remarks -->
+                    <div class="md:col-span-2">
+                        <x-input-label for="remarks" value="Remarks" />
+                        <textarea name="remarks" id="remarks" rows="4"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('remarks', $lead->remarks) }}</textarea>
+                    </div>
 
-        <x-input-label for="phone" value="Phone" />
-        <x-text-input id="phone" name="phone" type="text" class="w-full" value="{{ old('phone', $lead->phone) }}" required />
-
-        <x-input-label for="lead_source" value="Lead Source" />
-        <x-text-input id="lead_source" name="lead_source" type="text" class="w-full" value="{{ old('lead_source', $lead->lead_source) }}" required />
-
-        <x-input-label for="status" value="Status" />
-        <select name="status" id="status" class="w-full border rounded p-2">
-            @foreach (['New', 'Contacted', 'Converted', 'Lost'] as $status)
-                <option value="{{ $status }}" {{ $lead->status === $status ? 'selected' : '' }}>{{ $status }}</option>
-            @endforeach
-        </select>
-
-        @if (auth()->user()->role === 'admin')
-            <x-input-label for="assigned_to" value="Assign to (Sales Executive)" />
-            <select name="assigned_to" id="assigned_to" class="w-full border rounded p-2">
-                <option value="">Unassigned</option>
-                @foreach ($salesUsers as $user)
-                    <option value="{{ $user->id }}" {{ $lead->assigned_to == $user->id ? 'selected' : '' }}>
-                        {{ $user->name }}
-                    </option>
-                @endforeach
-            </select>
-        @endif
-
-        <x-input-label for="remarks" value="Remarks" />
-        <textarea name="remarks" id="remarks" class="w-full border rounded p-2">{{ old('remarks', $lead->remarks) }}</textarea>
-
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update Lead</button>
-    </form>
-</div></div></div></div>
+                    <!-- Submit -->
+                    <div class="md:col-span-2 flex justify-end">
+                        <button type="submit"
+                            class="inline-flex items-center px-6 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-black hover:bg-blue-700 transition duration-150">
+                           Update Lead
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

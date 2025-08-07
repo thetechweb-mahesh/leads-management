@@ -43,7 +43,11 @@
 
             <!-- Page Content -->
             <main>
-              @yield('content')
+                 @if (!empty($slot))
+  {{ $slot }}
+@else
+  @yield('content')
+@endif
             </main>
         </div>
     </body>

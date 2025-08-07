@@ -1,30 +1,41 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6"> My Assigned Leads           <a href="{{ route('leads.index') }}" class="bg-blue-600 text-white px-1 py-2 rounded">
- view Leads
-      </a></h2>
+<div class="space-y-6">
+    <!-- Header -->
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">My Assigned Leads</h1>
+        <p class="text-gray-500 mt-1">Welcome, {{ auth()->user()->name }}!</p>
+    </div>
 
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Assigned Leads Table -->
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="p-6 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-800">Assigned Leads</h2>
+            <p class="text-sm text-gray-500">Here are the leads assigned to you.</p>
+        </div>
+
+        <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+                <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Name</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">Lead Source</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lead Source</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-100">
                     @forelse($assignedLeads as $lead)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 text-sm text-gray-800">{{ $lead->name }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-800">{{ $lead->name }}</td>
                             <td class="px-6 py-4 text-sm">
-                                <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold
-                                    {{ $lead->status === 'New' ? 'bg-blue-100 text-blue-800' :
-                                       ($lead->status === 'Contacted' ? 'bg-yellow-100 text-yellow-800' :
-                                       ($lead->status === 'Converted' ? 'bg-green-100 text-green-800' :
-                                       'bg-red-100 text-red-800')) }}">
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
+                                    {{ match($lead->status) {
+                                        'New' => 'bg-blue-100 text-blue-800',
+                                        'Contacted' => 'bg-yellow-100 text-yellow-800',
+                                        'Converted' => 'bg-green-100 text-green-800',
+                                        default => 'bg-red-100 text-red-800'
+                                    } }}">
                                     {{ $lead->status }}
                                 </span>
                             </td>
@@ -39,4 +50,5 @@
             </table>
         </div>
     </div>
+</div>
 @endsection
