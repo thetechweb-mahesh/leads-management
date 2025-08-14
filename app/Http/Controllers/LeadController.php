@@ -14,8 +14,18 @@ class LeadController extends Controller
   
   public function index(Request $request)
 {
+
+    
     $user = Auth::user();
     $query = Lead::query();
+
+      // Filters
+    if ($request->filled('search')) {
+        $query->where(function($q) use ($request) {
+            $q->where('name', 'like', "%{$request->search}%")
+              ->orWhere('email', 'like', "%{$request->search}%");
+        });
+    }
 
     if ($user->role === 'sales') {
         $query->where('assigned_to', $user->id);

@@ -19,6 +19,7 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
+                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Lead Source</th>
@@ -27,6 +28,7 @@
                 <tbody class="bg-white divide-y divide-gray-100">
                     @forelse($assignedLeads as $lead)
                         <tr class="hover:bg-gray-50">
+                              <td class="px-6 py-4 text-sm font-medium text-gray-800">{{ $lead->id }}</td>
                             <td class="px-6 py-4 text-sm font-medium text-gray-800">{{ $lead->name }}</td>
                             <td class="px-6 py-4 text-sm">
                                 <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
@@ -48,6 +50,10 @@
                     @endforelse
                 </tbody>
             </table>
+              <!-- Pagination -->
+  
+  
+  
         </div>
     </div>
 </div>

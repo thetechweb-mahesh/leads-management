@@ -12,21 +12,15 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+           @viteReactRefresh
+
+        @vite(['resources/css/app.css', 'resources/js/app.jsx'])
           <script src="https://cdn.tailwindcss.com"></script>
 
            <!-- Optional custom Tailwind config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+   
+                           
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

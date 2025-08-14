@@ -35,6 +35,31 @@
             </div>
         </div>
 
+
+
+
+
+              <div>
+          <button @click="leadMenuOpen = !leadMenuOpen"
+              class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium hover:bg-gray-800 rounded focus:outline-none">
+              <div class="flex items-center">
+                <span class="ml-2">Pages</span>
+              </div>
+              <svg :class="{'rotate-180': leadMenuOpen}" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+          </button>
+          <div x-show="leadMenuOpen" x-cloak class="ml-6 mt-2 space-y-1">
+             
+              <a href="{{ route('pages.create') }}" class="block px-2 py-1 text-sm hover:bg-gray-800 rounded">Add pages</a>
+              <!-- <a href="#" class="block px-2 py-1 text-sm hover:bg-gray-800 rounded">Trash</a> -->
+              <!-- <a href="#" class="block px-2 py-1 text-sm hover:bg-gray-800 rounded">Duplicates</a> -->
+              <!-- <a href="#" class="block px-2 py-1 text-sm hover:bg-gray-800 rounded">Junk/Spam</a> -->
+              <!-- <a href="#" class="block px-2 py-1 text-sm hover:bg-gray-800 rounded">Expiring</a> -->
+          </div>
+      </div>
+
+
         <!-- Other Menu Items -->
         <!-- <a href="#" class="flex items-center px-4 py-2 text-sm font-medium hover:bg-gray-800 rounded"> -->
             <!-- <span class="ml-2">Marketing Campaigns</span> -->
